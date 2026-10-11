@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "zhigou"
+version = "0.1.0"
+description = "智购参谋 · AI 购物决策副驾驶（四步闭环 + 六道防线）"
+requires-python = ">=3.8"
+# 核心运行时零依赖：只用标准库。
+#   这不是为了偷懒，而是「真实性」这条产品命脉不能被上游服务的可用性绑架——
+#   采集与清洗必须能在完全离线、结果完全确定的环境下复现。
+dependencies = []
+
+[project.optional-dependencies]
+# API 服务与向量检索是可选增强，不装也能跑通全链路
+api = ["fastapi>=0.100", "uvicorn[standard]>=0.23"]
+llm = ["httpx>=0.24"]
+
+[project.scripts]
+zhigou = "zhigou.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-dir]
+"" = "src"
